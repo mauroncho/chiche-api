@@ -1,97 +1,90 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: Jun 18, 2024 at 10:44 PM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
+-- SO del servidor:              Win64
+-- HeidiSQL Versión:             12.1.0.6537
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Database: `don_chiche`
---
 
--- --------------------------------------------------------
+-- Volcando estructura de base de datos para don_chiiche
+CREATE DATABASE IF NOT EXISTS `don_chiiche` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `don_chiiche`;
 
---
--- Table structure for table `categorias`
---
+-- Volcando estructura para tabla don_chiiche.categorias
+CREATE TABLE IF NOT EXISTS `categorias` (
+  `cod_categoria` int NOT NULL AUTO_INCREMENT,
+  `tipo_categoria` varchar(40) NOT NULL,
+  PRIMARY KEY (`cod_categoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `categorias` (
-  `id` int UNSIGNED NOT NULL,
-  `nombre` varchar(25) COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Volcando datos para la tabla don_chiiche.categorias: ~8 rows (aproximadamente)
+INSERT INTO `categorias` (`cod_categoria`, `tipo_categoria`) VALUES
+	(1, 'Embutido'),
+	(2, 'Bebida'),
+	(3, 'Congelado'),
+	(4, 'Congelado'),
+	(5, 'Embutido'),
+	(6, 'Frito'),
+	(7, 'Embutido'),
+	(8, 'Frito');
 
--- --------------------------------------------------------
+-- Volcando estructura para tabla don_chiiche.clientes
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `id_clientes` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(30) NOT NULL,
+  `apellido` varchar(30) NOT NULL,
+  `num_doc` int NOT NULL,
+  PRIMARY KEY (`id_clientes`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `productos`
---
+-- Volcando datos para la tabla don_chiiche.clientes: ~8 rows (aproximadamente)
+INSERT INTO `clientes` (`id_clientes`, `nombre`, `apellido`, `num_doc`) VALUES
+	(1, 'Juan', 'Perez', 27666999),
+	(2, 'Kevin', 'Peña', 22888990),
+	(3, 'Arturo', 'Rosa', 33555884),
+	(4, 'Lautaro', 'Gautier', 11555789),
+	(5, 'Kris', 'Paz', 45667890),
+	(6, 'Lauti', 'Prezco', 55768908),
+	(7, 'Joaco', 'MC', 12345678),
+	(8, 'Romeo', 'Sol', 34555785);
 
-CREATE TABLE `productos` (
-  `ID_Producto` int UNSIGNED NOT NULL,
-  `Nombre_Producto` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `Stock` int NOT NULL,
-  `Precio` float NOT NULL,
-  `ID_Categoria` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Volcando estructura para tabla don_chiiche.productos
+CREATE TABLE IF NOT EXISTS `productos` (
+  `cod_product` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(30) NOT NULL,
+  `stock` int NOT NULL,
+  `precio` float NOT NULL,
+  `cod_categoria` int NOT NULL,
+  `id_clientes` int NOT NULL,
+  PRIMARY KEY (`cod_product`),
+  KEY `cod_categoria` (`cod_categoria`),
+  KEY `id_clientes` (`id_clientes`),
+  CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`cod_categoria`) REFERENCES `categorias` (`cod_categoria`),
+  CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`id_clientes`) REFERENCES `clientes` (`id_clientes`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Indexes for dumped tables
---
+-- Volcando datos para la tabla don_chiiche.productos: ~8 rows (aproximadamente)
+INSERT INTO `productos` (`cod_product`, `nombre`, `stock`, `precio`, `cod_categoria`, `id_clientes`) VALUES
+	(100, 'Pancho Mexicano', 10, 100.5, 1, 2),
+	(101, 'Pancho Salteño', 20, 300, 1, 1),
+	(102, 'Papas Cheddar', 50, 250.5, 3, 8),
+	(103, 'Coca Cola', 100, 200, 2, 8),
+	(104, 'Pancho Tucumano', 15, 500, 7, 6),
+	(105, 'Aros de Cebolla', 36, 600, 6, 4),
+	(106, 'Pancho Mexicano', 13, 550, 5, 3),
+	(107, 'Agua', 400, 100, 2, 5);
 
---
--- Indexes for table `categorias`
---
-ALTER TABLE `categorias`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `productos`
---
-ALTER TABLE `productos`
-  ADD PRIMARY KEY (`ID_Producto`),
-  ADD KEY `ID_Categoria` (`ID_Categoria`),
-  ADD KEY `ID_Categoria_2` (`ID_Categoria`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `categorias`
---
-ALTER TABLE `categorias`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `productos`
---
-ALTER TABLE `productos`
-  MODIFY `ID_Producto` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `productos`
---
-ALTER TABLE `productos`
-  ADD CONSTRAINT `productos_fk` FOREIGN KEY (`ID_Categoria`) REFERENCES `productos` (`ID_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`ID_Categoria`) REFERENCES `categorias` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-COMMIT;
-
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
