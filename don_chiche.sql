@@ -16,7 +16,7 @@
 
 
 -- Volcando estructura de base de datos para don_chiiche
-CREATE DATABASE IF NOT EXISTS `don_chiiche` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `don_chiiche` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `don_chiiche`;
 
 -- Volcando estructura para tabla don_chiiche.categorias
@@ -24,18 +24,13 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `cod_categoria` int NOT NULL AUTO_INCREMENT,
   `tipo_categoria` varchar(40) NOT NULL,
   PRIMARY KEY (`cod_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla don_chiiche.categorias: ~8 rows (aproximadamente)
 INSERT INTO `categorias` (`cod_categoria`, `tipo_categoria`) VALUES
-	(1, 'Embutido'),
+	(1, 'Plato_principal'),
 	(2, 'Bebida'),
-	(3, 'Congelado'),
-	(4, 'Congelado'),
-	(5, 'Embutido'),
-	(6, 'Frito'),
-	(7, 'Embutido'),
-	(8, 'Frito');
+	(3, 'Entrada');
 
 -- Volcando estructura para tabla don_chiiche.clientes
 CREATE TABLE IF NOT EXISTS `clientes` (
@@ -44,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `apellido` varchar(30) NOT NULL,
   `num_doc` int NOT NULL,
   PRIMARY KEY (`id_clientes`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla don_chiiche.clientes: ~8 rows (aproximadamente)
 INSERT INTO `clientes` (`id_clientes`, `nombre`, `apellido`, `num_doc`) VALUES
@@ -70,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   KEY `id_clientes` (`id_clientes`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`cod_categoria`) REFERENCES `categorias` (`cod_categoria`),
   CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`id_clientes`) REFERENCES `clientes` (`id_clientes`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla don_chiiche.productos: ~8 rows (aproximadamente)
 INSERT INTO `productos` (`cod_product`, `nombre`, `stock`, `precio`, `cod_categoria`, `id_clientes`) VALUES
@@ -78,9 +73,9 @@ INSERT INTO `productos` (`cod_product`, `nombre`, `stock`, `precio`, `cod_catego
 	(101, 'Pancho Salteño', 20, 300, 1, 1),
 	(102, 'Papas Cheddar', 50, 250.5, 3, 8),
 	(103, 'Coca Cola', 100, 200, 2, 8),
-	(104, 'Pancho Tucumano', 15, 500, 7, 6),
-	(105, 'Aros de Cebolla', 36, 600, 6, 4),
-	(106, 'Pancho Mexicano', 13, 550, 5, 3),
+	(104, 'Pancho Tucumano', 15, 500, 1, 6),
+	(105, 'Aros de Cebolla', 36, 600, 3, 4),
+	(106, 'Pancho Mexicano', 13, 550, 1, 3),
 	(107, 'Agua', 400, 100, 2, 5);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
