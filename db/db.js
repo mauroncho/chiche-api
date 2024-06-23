@@ -1,10 +1,10 @@
 const mysql = require("mysql2");
 
 const connection = mysql.createConnection({
-  host: "mysql-cami.alwaysdata.net",
-  user: "cami_don_chiche",
-  password: "vaquero",
-  database: "cami_don_chiche",
+  host: "mysql-mauroncho.alwaysdata.net",
+  user: "mauroncho_don_chiche",
+  password: "Don_chiche",
+  database: "mauroncho_don_chiche",
 });
 
 connection.connect((error) => {
