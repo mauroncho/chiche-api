@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const productosRouter = require("./routes/productos.router");
+//deploy en https://chiche-api.vercel.app/
 
 app.use(express.json());
 app.use("/productos", productosRouter);
