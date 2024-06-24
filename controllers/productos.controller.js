@@ -18,6 +18,7 @@ const agregar = (req, res) => {
   
   const sql = "INSERT INTO clientes (nombre, apellido, num_doc) VALUES (?, ?, ?)";
   connect.query(sql, [nombre, apellido, num_doc], (error, result) => {
+    console.log(result)
     if (error) {
       return res.status(500).json({ error: "Intente más tarde" });
     }
