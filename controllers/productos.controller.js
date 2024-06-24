@@ -4,7 +4,10 @@ const metodo = (req, res) => {
   const sql = "SELECT * FROM productos";
   connect.query(sql, (error, rows) => {
     if (error) {
-      return res.status(500).json({ error: "Intente mas tarde" });
+      console.error("Database query error:", error);
+      return res
+        .status(500)
+        .json({ error: "Intente más tarde", details: error.message });
     }
     res.json(rows);
   });
