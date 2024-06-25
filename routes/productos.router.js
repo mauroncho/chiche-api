@@ -3,7 +3,7 @@ const router = express.Router();
 
 const controller = require("../controllers/productos.controller");
 router.get("/", controller.listado);
-router.get("/:id", controller.obtenerPorId);
+router.get("/:cod_product", controller.obtenerPorId);
 router.post("/", controller.agregar);
 
 module.exports = router;

@@ -29,7 +29,7 @@ const obtenerPorId = (req, res) => {
       return res.status(404).json({ error: "Producto no encontrado" });
     }
 
-    res.json(rows);
+    res.json(rows[0]);
   });
 };
 
