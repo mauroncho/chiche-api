@@ -1,5 +1,5 @@
 const connect = require("../db/db");
-
+//obtener listado de productos
 const listado = (req, res) => {
   const sql = "SELECT * FROM productos";
   connect.query(sql, (error, rows) => {
@@ -12,7 +12,7 @@ const listado = (req, res) => {
     res.json(rows);
   });
 };
-
+//obtener un producto especifico segun su id
 const obtenerPorId = (req, res) => {
   console.log(req.params);
   const { cod_product } = req.params;
@@ -32,7 +32,7 @@ const obtenerPorId = (req, res) => {
     res.json(rows[0]);
   });
 };
-
+//agregar un producto a la db
 const agregar = (req, res) => {
   const { nombre, stock, precio, cod_categoria, id_clientes } = req.body;
 
