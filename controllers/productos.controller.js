@@ -66,8 +66,33 @@ const agregar = (req, res) => {
   );
 };
 
+const actualizar = (req, res) => {
+  const { cod_product } = req.params;
+  const { nombre, stock, precio, cod_categoria, id_clientes } = req.body;
+
+  if (!nombre || !stock || !precio || !cod_categoria || !id_clientes) {
+    return res.status(400).json({ error: "Faltan campos requeridos" });
+  }
+
+  const sql =
+    "UPDATE productos SET nombre = ?, stock = ?, precio = ?, cod_categoria = ?, id_clientes = ? WHERE cod_product = ?";
+
+  connect.query(
+    sql,
+    [nombre, stock, precio, cod_categoria, id_clientes, cod_product],
+    (error, result) => {
+      if (error) {
+        console.error("Error de consulta a la base de datos:", error);
+        return res.status(500).json({ error: "Intente más tarde" });
+      }
+      const producto = { ...req.body, ...req.params };
+      res.json(producto);
+    }
+  );
+};
 module.exports = {
   listado,
   agregar,
   obtenerPorId,
+  actualizar,
 };
