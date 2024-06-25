@@ -33,21 +33,60 @@ const obtenerPorId = (req, res) => {
   });
 };
 
+// const agregar = (req, res) => {
+//   const { cod_product, nombre, stock, precio, cod_categoria, id_clientes } =
+//     req.body;
+
+//   const sql =
+//     "INSERT INTO productos (cod_product, nombre, stock, precio,  cod_categoria, id_clientes) VALUES (?, ?, ?, ?, ?, ?)";
+//   connect.query(
+//     sql,
+//     [cod_product, nombre, stock, precio, cod_categoria, id_clientes],
+//     (error, result) => {
+//       console.log(result);
+//       if (error) {
+//         return res.status(500).json({ error: "Intente más tarde" });
+//       }
+
+//       const producto = { ...req.body };
+
+//       res.status(201).json(producto);
+//     }
+//   );
+// };
+
 const agregar = (req, res) => {
-  const { nombre, apellido, num_doc } = req.body;
+  const { nombre, stock, precio, cod_categoria, id_clientes } = req.body;
+
+  // Asegurarse de que todos los campos necesarios estén presentes
+  if (!nombre || !stock || !precio || !cod_categoria || !id_clientes) {
+    return res.status(400).json({ error: "Faltan campos requeridos" });
+  }
 
   const sql =
-    "INSERT INTO clientes (nombre, apellido, num_doc) VALUES (?, ?, ?)";
-  connect.query(sql, [nombre, apellido, num_doc], (error, result) => {
-    console.log(result);
-    if (error) {
-      return res.status(500).json({ error: "Intente más tarde" });
+    "INSERT INTO productos (nombre, stock, precio, cod_categoria, id_clientes) VALUES (?, ?, ?, ?, ?)";
+
+  connect.query(
+    sql,
+    [nombre, stock, precio, cod_categoria, id_clientes],
+    (error, result) => {
+      if (error) {
+        console.error("Error de consulta a la base de datos:", error);
+        return res.status(500).json({ error: "Intente más tarde" });
+      }
+
+      const producto = {
+        id: result.insertId,
+        nombre,
+        stock,
+        precio,
+        cod_categoria,
+        id_clientes,
+      };
+
+      res.status(201).json(producto);
     }
-
-    const final = { ...req.body, id_clientes: result.insertId };
-
-    res.status(201).json(final);
-  });
+  );
 };
 
 module.exports = {
