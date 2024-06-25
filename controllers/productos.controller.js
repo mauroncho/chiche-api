@@ -33,32 +33,9 @@ const obtenerPorId = (req, res) => {
   });
 };
 
-// const agregar = (req, res) => {
-//   const { cod_product, nombre, stock, precio, cod_categoria, id_clientes } =
-//     req.body;
-
-//   const sql =
-//     "INSERT INTO productos (cod_product, nombre, stock, precio,  cod_categoria, id_clientes) VALUES (?, ?, ?, ?, ?, ?)";
-//   connect.query(
-//     sql,
-//     [cod_product, nombre, stock, precio, cod_categoria, id_clientes],
-//     (error, result) => {
-//       console.log(result);
-//       if (error) {
-//         return res.status(500).json({ error: "Intente más tarde" });
-//       }
-
-//       const producto = { ...req.body };
-
-//       res.status(201).json(producto);
-//     }
-//   );
-// };
-
 const agregar = (req, res) => {
   const { nombre, stock, precio, cod_categoria, id_clientes } = req.body;
 
-  // Asegurarse de que todos los campos necesarios estén presentes
   if (!nombre || !stock || !precio || !cod_categoria || !id_clientes) {
     return res.status(400).json({ error: "Faltan campos requeridos" });
   }
