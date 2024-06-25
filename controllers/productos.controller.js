@@ -85,14 +85,35 @@ const actualizar = (req, res) => {
         console.error("Error de consulta a la base de datos:", error);
         return res.status(500).json({ error: "Intente más tarde" });
       }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: "Producto no encontrado" });
+      }
       const producto = { ...req.body, ...req.params };
       res.json(producto);
     }
   );
 };
+
+const eliminar = (req, res) => {
+  const { cod_product } = req.params;
+  const sql = "DELETE FROM productos WHERE cod_product = ?";
+
+  connect.query(sql, [cod_product], (error, result) => {
+    if (error) {
+      console.error("Error de consulta a la base de datos:", error);
+      return res.status(500).json({ error: "Intente más tarde" });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+    res.json({ message: "Producto eliminado correctamente" });
+  });
+};
+
 module.exports = {
   listado,
   agregar,
   obtenerPorId,
   actualizar,
+  eliminar,
 };
